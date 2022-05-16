@@ -1,15 +1,17 @@
-#Asiabill PHP SDK
-
+Asiabill PHP SDK
+===
 一个集成了Asiabill的payment和openApi接口的组件，通过传递指定请求类型和对应的参数即可完成接口请求。使用前请先阅读Asiabill[接口文档](https://asiabill.gitbook.io/api-explorer/) 
 
-##PHP要求
+PHP要求
+===
 * php >= 5.6  
 * [curl](https://www.php.net/manual/en/book.curl.php)
 * [json](https://www.php.net/manual/en/book.json.php)
 * [openssl](https://www.php.net/manual/en/book.openssl.php)
 
 
-##使用PHP SDK
+使用PHP SDK
+===
 1、加载AsiabillIntegration.php文件  
 ```php 
 include_once "Classes/AsiabillIntegration.php"; 
@@ -34,12 +36,17 @@ $asiabill->payment()->request($type,$data);
 $asiabill->openapi()->request($type,$data);
 ```
 
-##参数说明
+参数说明
+===
 >type：请求类型：自定义字符串<br/>
 >data：请求参数：数组参数，包含path，body，query三个部分
 
-##示例代码
-###创建交易：
+
+示例代码
+===
+创建交易：
+---
+
 ```php
 $result = $asiabill->request('checkoutPayment',['body' => [
     'billingAddress' => [
@@ -90,14 +97,16 @@ if($result['code'] == '0000'){
 }
 ```
 
-###查询交易信息：
+查询交易信息：
+---
 ```php
 $asiabill->openapi()->request('orderInfo',['path' => [
     'tradeNo' => $tradeNo
 ]]);
 ```
 
-###创建客户：
+创建客户：
+---
 ```php
 $asiabill->request('customers',['body' => [
     'description' => 'test customer',
@@ -108,24 +117,28 @@ $asiabill->request('customers',['body' => [
 ]]);
 ```
 
-###删除客户：
+删除客户：
+---
 ```php
 $asiabill->request('customers',['path' => [
     'customerId' => $customer_id
 ],'delete' => true]);
 ```
 
-###签名校验
+签名校验
+---
 ```php
 asiabill->verification()
 ```
 
-###获取webhook数据
+获取webhook数据
+---
 ```php
 $asiabill->getWebhookData();
 ```
 
-##payment类型
+payment类型
+===
 
 | 类型                    | 说明                | 接口                                                             |
 |-----------------------|-------------------|----------------------------------------------------------------|
@@ -141,7 +154,8 @@ $asiabill->getWebhookData();
 | checkoutPayment       | 获取支付页面地址          | /checkout/payment                                              |
 
 
-##openApi类型
+openApi类型
+===
 
 | 类型           | 说明     | 接口                   |
 |--------------|--------|----------------------|
@@ -154,7 +168,8 @@ $asiabill->getWebhookData();
 | orderInfo    | 交易详情   | /orderInfo/{tradeNo} |
 
 
-##添加自定义类型
+添加自定义类型
+===
 * $request_type 请求类型，自定义字符，与request第一个参数一致，已经存在的类型不能添加
 * $request_path 接口路径，参考asiabill接口文档
 ```php
