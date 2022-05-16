@@ -12,11 +12,12 @@
 ##使用PHP SDK
 1、加载AsiabillIntegration.php文件  
 ```php 
-include_once "Asiabill/Classes/AsiabillIntegration.php"; 
+include_once "Classes/AsiabillIntegration.php"; 
 ```
 2、初始化对象
 ```php
 use \Asiabill\Classes\AsiabillIntegration;
+$model = 'test'; // test or live
 $asiabill = new AsiabillIntegration($model,$gateway_no,$sign_key);
 ```
 3、开启日志，可以通过参数设置目录，如果不开启则跳过这一步

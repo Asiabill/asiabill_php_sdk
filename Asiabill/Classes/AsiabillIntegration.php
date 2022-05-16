@@ -1,6 +1,8 @@
 <?php
 namespace Asiabill\Classes;
 
+use Exception;
+
 include_once 'AsiabillHttp.php';
 include_once 'AsiabillLogger.php';
 
@@ -8,9 +10,9 @@ class AsiabillIntegration
 {
     const VERSION = '1.0.0';
     const PAYMENT_LIVE = 'https://safepay.asiabill.com';
-    const PAYMENT_TEST = 'https://testpay.asiabill.com';
-    const OPENAPI_LIVE = 'https://openapi.asiabill.com/openApi';
-    const OPENAPI_TEST = 'https://api-sandbox.asiabill.com/openApi';
+    const PAYMENT_TEST = 'https://testpay.asiabill.com/V2022-03/';
+    const OPENAPI_LIVE = 'https://openapi.asiabill.com';
+    const OPENAPI_TEST = 'https://api-sandbox.asiabill.com';
 
     protected $payment_url;
     protected $openapi_url;
@@ -54,13 +56,13 @@ class AsiabillIntegration
             throw new \Exception('Initialization error');
         }
 
-        if( !in_array($mode,array('test','live')) ){
+        if( !in_array($mode,['test','live']) ){
             throw new \Exception('The "mode" must be "test" or "live"');
         }
 
         $this->default_dir = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'log'.DIRECTORY_SEPARATOR;
-        $this->payment_url = ( $mode == 'test' ? self::PAYMENT_TEST : self::PAYMENT_LIVE ) . '/V2022-03';
-        $this->openapi_url = ( $mode == 'test' ? self::OPENAPI_TEST : self::OPENAPI_LIVE ) . '/V2022-03';
+        $this->payment_url = $mode == 'test' ? self::PAYMENT_TEST : self::PAYMENT_LIVE;
+        $this->openapi_url = $mode == 'test' ? self::OPENAPI_TEST : self::OPENAPI_LIVE;
         $this->gateway_no = $gateway_no;
         $this->sign_key = $sign_key;
 
@@ -116,7 +118,7 @@ class AsiabillIntegration
 
     /**
      * @param $type
-     * @param array $data array('path'=>array(),'query'=>array(),'body'=>array())
+     * @param array $data ['path'=>[],'query'=>[],'body'=>[]]
      * @return mixed
      * @throws \Exception
      */
@@ -340,7 +342,7 @@ class AsiabillIntegration
 
 
         if( $this->isLogger() ){
-            $this->logger->addLog('request-api : '.$this->url.$uri,'request');
+            $this->logger->addLog('request api : '.$this->url.$uri,'request');
             $this->logger->addLog('parameters : '.json_encode($parameters),'request');
         }
 
