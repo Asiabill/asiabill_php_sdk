@@ -9,6 +9,7 @@
       "homepage": "https://www.asiabill.com"
     }
   ],
+  "license": "GNU General Public License v3.0",
   "require": {
      "php": ">=5.6"
   },
