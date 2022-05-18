@@ -10,7 +10,7 @@ class AsiabillIntegration
     const PAYMENT_LIVE = 'https://safepay.asiabill.com';
     const PAYMENT_TEST = 'https://testpay.asiabill.com';
     const OPENAPI_LIVE = 'https://openapi.asiabill.com/openApi';
-    const OPENAPI_TEST = 'https://api-sandbox.asiabill.com/openApi';
+    const OPENAPI_TEST = 'https://api-uat.asiabill.com/openApi';
 
     protected $payment_url;
     protected $openapi_url;

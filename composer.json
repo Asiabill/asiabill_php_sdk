@@ -1,6 +1,5 @@
 {
   "name": "asiabill/asiabill_php_sdk",
-  "version": "1.0",
   "description": "You can quickly access the PHP SDK of asiabill payment",
   "type": "1",
   "keywords": ["asiabill","creditcard","payment","shop"],
