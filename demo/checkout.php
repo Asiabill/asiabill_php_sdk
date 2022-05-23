@@ -28,22 +28,20 @@ $result = $asiabill->request('checkoutPayment',['body' => [
     'callbackUrl' => $http_type.'://'.$_SERVER['HTTP_HOST'].'/asiabill_php_sdk/webhook.php',
     'customerId' => '', // asiabill创建的客户id，非网站用户id
     'deliveryAddress' => [
-        'address' => 'address',
-        'city' => 'BR',
-        'country' => 'country',
-        'email' => '123451234@email.com',
-        'firstName' => 'firstName',
-        'lastName' => 'lastName',
-        'phone' => '13800138000',
-        'state' => 'CE',
-        'zip' => '666666'
+        'shipAddress' => 'mfdgohmqkpocemkqwtks',
+        'shipCity' => 'MQOHUPOX',
+        'shipCountry' => 'BR',
+        'shipFirstName' =>  'SFDMPG',
+        'shipLastName' =>  'USJAXT',
+        'shipPhone' => '62519594707',
+        'shipState' => 'WEWBZ',
+        'shipZip' => '512008'
     ],
     'goodsDetails' => [
         [
-            'goodscount' => '1',
-            'goodsprice' => '6.00',
-            'goodstitle' => 'goods_1',
-            'goodsurl' => ''
+            'goodsCount' => '1',
+            'goodsPrice' => '6.00',
+            'goodsTitle' => 'goods_1'
         ]
     ],
     'isMobile' => $asiabill->isMobile(), // 0:web, 1:h5, 2:app_SDK

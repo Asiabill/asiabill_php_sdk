@@ -36,7 +36,7 @@ $result = $asiabill->request('confirmCharge',['body' => [
             'cardSecurityCode' => '123'
         ]
     ],
-    'deliveryAddress' => [
+    'shipping' => [
         'address' => [
             'line1' => 'line1',
             'line2' => 'line2',
@@ -52,10 +52,9 @@ $result = $asiabill->request('confirmCharge',['body' => [
     ],
     'goodsDetails' => [
         [
-            'goodscount' => '1',
-            'goodsprice' => '6.00',
-            'goodstitle' => 'goods_1',
-            'goodsurl' => ''
+            'goodsCount' => '1',
+            'goodsPrice' => '6.00',
+            'goodsTitle' => 'goods_1'
         ]
     ],
     'isMobile' => $asiabill->isMobile(), // 0:web, 1:h5, 2:app_SDK

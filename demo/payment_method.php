@@ -92,7 +92,7 @@ if( $customerPaymentMethodId ){
             'callbackUrl' => $http_type.'://'.$_SERVER['HTTP_HOST'].'/callback.php',
             'customerId' => $customersId, // asiabill创建的客户id，非网站用户id。1：为空：不绑定customerPaymentMethodId，2：不为空：自动绑定customerPaymentMethodId
             'customerPaymentMethodId' => $customerPaymentMethodId,
-            'deliveryAddress' => [
+            'shipping' => [
                 'address' => [
                     'line1' => 'line1',
                     'line2' => 'line2',
@@ -108,10 +108,9 @@ if( $customerPaymentMethodId ){
             ],
             'goodsDetails' => [
                 [
-                    'goodscount' => '1',
-                    'goodsprice' => '6.00',
-                    'goodstitle' => 'goods_1',
-                    'goodsurl' => ''
+                    'goodsCount' => '1',
+                    'goodsPrice' => '6.00',
+                    'goodsTitle' => 'goods_1'
                 ]
             ],
             'isMobile' => $asiabill->isMobile(), // 0:web, 1:h5, 2:app_SDK
