@@ -36,6 +36,11 @@ $asiabill->payment()->request($type,$data);
 $asiabill->openapi()->request($type,$data);
 ```
 
+5、获取站内支付jssdk脚本
+```php
+$asiabill->getJsScript();
+```
+
 参数说明
 ===
 >type：请求类型：自定义字符串<br/>

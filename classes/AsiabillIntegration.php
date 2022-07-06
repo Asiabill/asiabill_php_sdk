@@ -6,11 +6,12 @@ include_once 'AsiabillLogger.php';
 
 class AsiabillIntegration
 {
-    const VERSION = '1.0';
+    const VERSION = '1.1';
     const PAYMENT_LIVE = 'https://safepay.asiabill.com';
     const PAYMENT_TEST = 'https://testpay.asiabill.com';
     const OPENAPI_LIVE = 'https://openapi.asiabill.com/openApi';
     const OPENAPI_TEST = 'https://api-uat.asiabill.com/openApi';
+    const API_VERSION = '/V2022-03';
 
     protected $payment_url;
     protected $openapi_url;
@@ -59,13 +60,12 @@ class AsiabillIntegration
         }
 
         $this->default_dir = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'log'.DIRECTORY_SEPARATOR;
-        $this->payment_url = ( $mode == 'test' ? self::PAYMENT_TEST : self::PAYMENT_LIVE ) . '/V2022-03';
-        $this->openapi_url = ( $mode == 'test' ? self::OPENAPI_TEST : self::OPENAPI_LIVE ) . '/V2022-03';
+        $this->payment_url = ( $mode == 'test' ? self::PAYMENT_TEST : self::PAYMENT_LIVE );
+        $this->openapi_url = ( $mode == 'test' ? self::OPENAPI_TEST : self::OPENAPI_LIVE );
         $this->gateway_no = $gateway_no;
         $this->sign_key = $sign_key;
 
     }
-
 
     function startLogger($bool = true, $dir = '' )
     {
@@ -97,21 +97,25 @@ class AsiabillIntegration
         return 0;
     }
 
+    function initialApi()
+    {
+        $this->url = '';
+    }
+
     function payment()
     {
-        $this->url = $this->payment_url;
+        $this->url = $this->payment_url.self::API_VERSION;
         return $this;
     }
 
     function openapi()
     {
-        $this->url = $this->openapi_url;
+        $this->url = $this->openapi_url.self::API_VERSION;
         return $this;
     }
 
-    function initialApi()
-    {
-        $this->url = '';
+    function getJsScript(){
+        return $this->payment_url.'/static/v3/js/AsiabillPayment.min.js';
     }
 
     /**
@@ -124,7 +128,7 @@ class AsiabillIntegration
     {
 
         if( empty( $this->url ) ){
-            $this->url = $this->payment_url;
+            $this->url = $this->payment_url.self::API_VERSION;
         }
 
         if( !key_exists($type,$this->request_type) ){

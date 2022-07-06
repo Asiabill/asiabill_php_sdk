@@ -15,7 +15,7 @@ function getOrderNo(){
 
 $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'))? 'https': 'http';
 
-include_once __DIR__ . "/Classes/AsiabillIntegration.php";
+include_once __DIR__ . "/../classes/AsiabillIntegration.php";
 
 
 

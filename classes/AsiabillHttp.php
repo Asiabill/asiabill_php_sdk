@@ -80,9 +80,9 @@ class AsiabillHttp
         $code = curl_getinfo($this->ch,CURLINFO_HTTP_CODE);
 
 
-        $errno = curl_errno($this->ch);
+        $err = curl_error($this->ch);
         if( curl_errno($this->ch) ){
-            throw new \Exception('curl is err no : '.$errno);
+            throw new \Exception('cURL Error #: '.$err);
         }
 
         $this->response_info = array(

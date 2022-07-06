@@ -114,6 +114,7 @@ if( $customerPaymentMethodId ){
                 ]
             ],
             'isMobile' => $asiabill->isMobile(), // 0:web, 1:h5, 2:app_SDK
+            'customerIp' => '127.0.0.1',
             'orderAmount' => '7.00',
             'orderCurrency' => 'USD',
             'orderNo' => getOrderNo(),

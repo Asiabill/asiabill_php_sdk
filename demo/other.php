@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__."/../main.php";
+include __DIR__."/main.php";
 
 use \Asiabill\Classes\AsiabillIntegration;
 
@@ -9,7 +9,7 @@ $asiabill->startLogger();
 
 
 $result = $asiabill->openapi()->request('orderInfo',['path' => [
-    'tradeNo' => '2022051115234531475886'
+    'tradeNo' => '2022061517201146055621',
 ]]);
 
 var_dump($result);

@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__."/../main.php";
+include __DIR__."/main.php";
 
 use \Asiabill\Classes\AsiabillIntegration;
 

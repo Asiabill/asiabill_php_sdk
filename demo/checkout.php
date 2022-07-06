@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__."/../main.php";
+include __DIR__."/main.php";
 
 use \Asiabill\Classes\AsiabillIntegration;
 
@@ -25,7 +25,7 @@ $result = $asiabill->request('checkoutPayment',['body' => [
         'state' => 'CE',
         'zip' => '666666'
     ],
-    'callbackUrl' => $http_type.'://'.$_SERVER['HTTP_HOST'].'/asiabill_php_sdk/webhook.php',
+    'callbackUrl' => $http_type.'://'.$_SERVER['HTTP_HOST'].'/asiabill_php_sdk/demo/webhook.php',
     'customerId' => '', // asiabill创建的客户id，非网站用户id
     'deliveryAddress' => [
         'shipAddress' => 'mfdgohmqkpocemkqwtks',
@@ -51,7 +51,7 @@ $result = $asiabill->request('checkoutPayment',['body' => [
     'paymentMethod' => 'Credit Card', // 其它支付方式请参考文档说明
     'platform' => 'php_SDK', // 平台标识，用户自定义
     'remark' => '', // 订单备注信息
-    'returnUrl' => $http_type.'://'.$_SERVER['HTTP_HOST'].'/asiabill_php_sdk/return.php',
+    'returnUrl' => $http_type.'://'.$_SERVER['HTTP_HOST'].'/asiabill_php_sdk/demo/return.php',
     'webSite' => $_SERVER['HTTP_HOST']
 ]]);
 
