@@ -6,7 +6,7 @@ include_once 'AsiabillLogger.php';
 
 class AsiabillIntegration
 {
-    const VERSION = '1.1';
+    const VERSION = '1.2';
     const PAYMENT_LIVE = 'https://safepay.asiabill.com';
     const PAYMENT_TEST = 'https://testpay.asiabill.com';
     const OPENAPI_LIVE = 'https://openapi.asiabill.com/openApi';
@@ -67,6 +67,40 @@ class AsiabillIntegration
 
     }
 
+    static function isMobile()
+    {
+        $clientkeywords = array(
+            'mobile','iphone','ipod','iPad','android','HarmonyOS','wap'
+        );
+        if (preg_match("/(" . implode('|', $clientkeywords) . ")/i", strtolower($_SERVER['HTTP_USER_AGENT']))) {
+            return 1;
+        }
+        return 0;
+    }
+
+    static function clientIP(){
+
+        if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+            //优先使用  HTTP_X_FORWARDED_FOR，此值是一个逗号分割的多个IP
+            $ips = $_SERVER["HTTP_X_FORWARDED_FOR"];
+            $ips = explode(',',$ips);
+            $ip = array_shift($ips);
+        }
+        elseif (isset($_SERVER["HTTP_CLIENT_IP"])) {
+            $ip = $_SERVER["HTTP_CLIENT_IP"];
+        }
+        else {
+            $ip = $_SERVER["REMOTE_ADDR"];
+        }
+
+        if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false ||
+            filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false){
+            return $ip;
+        }else{
+            return $_SERVER["REMOTE_ADDR"];
+        }
+    }
+
     function startLogger($bool = true, $dir = '' )
     {
         if( !empty($dir)){
@@ -86,16 +120,6 @@ class AsiabillIntegration
         return ($this->logger && is_object($this->logger));
     }
 
-    function isMobile()
-    {
-        $clientkeywords = array(
-            'mobile','iphone','ipod','iPad','android','HarmonyOS','wap'
-        );
-        if (preg_match("/(" . implode('|', $clientkeywords) . ")/i", strtolower($_SERVER['HTTP_USER_AGENT']))) {
-            return 1;
-        }
-        return 0;
-    }
 
     function initialApi()
     {
@@ -341,7 +365,6 @@ class AsiabillIntegration
     private function handle($uri,$parameters,$method='POST')
     {
         $parameters['header']['sign-info'] = $this->signInfo($parameters);
-
 
         if( $this->isLogger() ){
             $this->logger->addLog('request-api : '.$this->url.$uri,'request');
