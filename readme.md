@@ -1,6 +1,8 @@
-Asiabill PHP SDK
+AsiaBill PHP SDK
 ===
-一个集成了Asiabill的payment和openApi接口的组件，通过传递指定请求类型和对应的参数即可完成接口请求。使用前请先阅读Asiabill[接口文档](https://asiabill.gitbook.io/api-explorer/) 
+一个集成了AsiaBill的payment和openApi接口的组件，通过传递指定请求类型和对应的参数即可完成接口请求。使用前请先阅读Asiabill[接口文档](https://asiabill.gitbook.io/api-explorer/)
+
+支付演示页面访问:<code>asiabill_php_sdk/demo/checkout.php</code>
 
 PHP要求
 ===
