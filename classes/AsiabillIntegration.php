@@ -6,7 +6,7 @@ include_once 'AsiabillLogger.php';
 
 class AsiabillIntegration
 {
-    const VERSION = '1.2';
+    const VERSION = '1.3';
     const PAYMENT_LIVE = 'https://safepay.asiabill.com';
     const PAYMENT_TEST = 'https://testpay.asiabill.com';
     const OPENAPI_LIVE = 'https://openapi.asiabill.com/openApi';
@@ -20,7 +20,6 @@ class AsiabillIntegration
     protected $sign_key;
     protected $logger = false;
     protected $default_dir;
-    protected $receive_data = array();
     protected $request_type = array(
         'customers' => '/customers', // 操作客户
         'sessionToken' => '/sessionToken', // 获取sessionToken
@@ -204,9 +203,10 @@ class AsiabillIntegration
                 'orderCurrency' => $_GET['orderCurrency'],
                 'orderInfo' => $_GET['orderInfo'],
                 'orderStatus' => $_GET['orderStatus'],
-                'maskCardNo' => isset( $_GET['maskCardNo'] )?$_GET['maskCardNo']:'' ,
+                'maskCardNo' => isset($_GET['maskCardNo'])?$_GET['maskCardNo']:'',
                 'message' => $_GET['message'],
             );
+
 
             if( $this->isLogger() ){
                 $this->logger->addLog('browser : '.json_encode($data),'result');
@@ -233,8 +233,8 @@ class AsiabillIntegration
             $check_sign_info = $this->signInfo($data);
 
             if( $this->isLogger() ){
+                $data['header']['sign-info'] = $request_header['Sign-Info'];
                 $this->logger->addLog('webhook : '.json_encode($data),'result');
-                $this->logger->addLog('check sign info : '.$request_header['Sign-Info'].' & '.$check_sign_info,'result');
             }
 
             return @$request_header['Sign-Info'] == strtoupper( $check_sign_info );
@@ -248,13 +248,47 @@ class AsiabillIntegration
      * 获取webhook内容
      * @return mixed
      */
-    function getWebhookData()
+    static function getWebhookData()
     {
-        if( empty( $this->receive_data) && $_SERVER['REQUEST_METHOD'] == 'POST' ){
-            $this->receive_data = json_decode(file_get_contents( 'php://input' ),true);
+        return json_decode(file_get_contents( 'php://input' ),true);
+    }
+
+    function buildQuery($result,$flags = 0){
+
+        $data = array(
+            'query' => array(
+                'merNo' => substr($this->gateway_no,0,5),
+                'gatewayNo' => $this->gateway_no,
+                'code' => $result['code'],
+                'message' => $result['message'],
+            )
+        );
+
+        $arr = array(
+            'orderNo',
+            'orderAmount',
+            'tradeNo',
+            'orderCurrency',
+            'orderInfo',
+            'orderStatus',
+            'signInfo',
+        );
+
+        foreach ($arr as $value){
+            if(isset($result['data'][$value])){
+                $data['query'][$value] = $result['data'][$value];
+            }else{
+                $data['query'][$value] = '';
+            }
         }
 
-        return $this->receive_data;
+        $data['query']['signInfo'] = strtoupper($this->signInfo($data));
+
+        if( $flags ){
+            return $data['query'];
+        }
+
+        return http_build_query($data['query']);
     }
 
     private function requestCommon($type,$data)
