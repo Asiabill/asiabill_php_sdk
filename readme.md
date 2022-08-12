@@ -133,7 +133,7 @@ $asiabill->request('customers',['path' => [
 签名校验
 ---
 ```php
-asiabill->verification()
+$asiabill->verification()
 ```
 
 获取webhook数据
