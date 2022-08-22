@@ -6,7 +6,7 @@ include_once 'AsiabillLogger.php';
 
 class AsiabillIntegration
 {
-    const VERSION = '1.4';
+    const VERSION = '1.5';
     const PAYMENT_LIVE = 'https://safepay.asiabill.com';
     const PAYMENT_TEST = 'https://testpay.asiabill.com';
     const OPENAPI_LIVE = 'https://openapi.asiabill.com/openApi';
@@ -209,7 +209,7 @@ class AsiabillIntegration
 
 
             if( $this->isLogger() ){
-                $this->logger->addLog('browser : '.json_encode($data),'result');
+                $this->logger->addLog('browser : '.json_encode($data,JSON_UNESCAPED_UNICODE),'result');
             }
 
             return @$signInfo == strtoupper($this->signInfo($data));
@@ -238,7 +238,7 @@ class AsiabillIntegration
 
             if( $this->isLogger() ){
                 $data['header']['sign-info'] = @$request_header['sign_info'];
-                $this->logger->addLog('webhook : '.json_encode($data),'result');
+                $this->logger->addLog('webhook : '.json_encode($data,JSON_UNESCAPED_UNICODE),'result');
             }
 
             return @$request_header['sign_info'] == strtoupper( $check_sign_info );
@@ -417,7 +417,7 @@ class AsiabillIntegration
 
         if( $this->isLogger() ){
             $this->logger->addLog('request-api : '.$this->url.$uri,'request');
-            $this->logger->addLog('parameters : '.json_encode($parameters),'request');
+            $this->logger->addLog('parameters : '.json_encode($parameters,JSON_UNESCAPED_UNICODE),'request');
         }
 
         $asiabillHttp = new AsiabillHttp($this->url.$uri);
@@ -459,7 +459,7 @@ class AsiabillIntegration
         }
 
         if( isset($data['body']) ){
-            $sign_arr[] = json_encode($data['body']);
+            $sign_arr[] = json_encode($data['body'],JSON_UNESCAPED_UNICODE);
         }
 
         $sign_str = implode('.',array_filter($sign_arr));

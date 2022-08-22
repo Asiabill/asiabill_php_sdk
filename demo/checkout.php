@@ -213,7 +213,7 @@ $session_token = $asiabill->request('sessionToken');
                             FontFamily:'',
                             FontWeight:'',
                             Color:'',
-                            ContainerBorder:'1px solid #ddd;',
+                            ContainerBorder:'1px solid #ddd',
                             ContainerBg:'',
                             ContainerSh:''
                         }
